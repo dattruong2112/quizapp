@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dattruong-configmap
+data:
+  SPRING_CONFIG_IMPORT: "configserver:http://configserver:8888"
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://localhost:8071/eureka/"
+  CONFIGSERVER_APPLICATION_NAME: configserver
+  HOST_APPLICATION_NAME: host
+  USER_APPLICATION_NAME: user
+  EXAM_APPLICATION_NAME: exam.yml
+  MESSAGE_APPLICATION_NAME: message
+  GATEWAYSERVER_APPLICATION_NAME: gatewayserver

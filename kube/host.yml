@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: host
+  labels:
+    app: host
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: host
+  template:
+    metadata:
+      labels:
+        app: host
+    spec:
+      containers:
+        - name: host
+          image: dattruong/host:s2
+          ports:
+            - containerPort: 8071
+          env:
+            - name: SPRING_APPLICATION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dattruong-configmap
+                  key: HOST_APPLICATION_NAME
+            - name: SPRING_CONFIG_IMPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dattruong-configmap
+                  key: SPRING_CONFIG_IMPORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: host
+spec:
+  selector:
+    app: host
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8071
+      targetPort: 8071
